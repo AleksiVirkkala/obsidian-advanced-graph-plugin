@@ -1,5 +1,9 @@
 import { Plugin } from "obsidian";
 import {
+	AdvancedGraphView,
+	VIEW_TYPE_ADVANCED_GRAPH,
+} from "src/AdvancedGraphView";
+import {
 	GraphSettings,
 	DEFAULT_SETTINGS,
 	GraphSettingTab,
@@ -11,8 +15,27 @@ export default class AdvancedGraphPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 
+		this.registerView(
+			VIEW_TYPE_ADVANCED_GRAPH,
+			(leaf) => new AdvancedGraphView(leaf)
+		);
+
+		this.addRibbonIcon("dice", "Open graph", () => {
+			this.activateView();
+		});
+
 		// This adds a settings tab so the user can configure various aspects of the plugin
 		this.addSettingTab(new GraphSettingTab(this.app, this));
+	}
+
+	async activateView() {
+		const { workspace } = this.app;
+		const leaf = workspace.getLeaf(true);
+		await leaf.setViewState({
+			type: VIEW_TYPE_ADVANCED_GRAPH,
+			active: true,
+		});
+		workspace.revealLeaf(leaf); // Maybe unnecessary
 	}
 
 	onunload() {}
