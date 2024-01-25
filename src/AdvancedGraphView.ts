@@ -1,8 +1,12 @@
 import { ItemView, WorkspaceLeaf } from 'obsidian';
 
+import Component from './Component.svelte';
+
 export const VIEW_TYPE_ADVANCED_GRAPH = 'advanced-graph-view';
 
 export class AdvancedGraphView extends ItemView {
+	component!: Component;
+
 	constructor(leaf: WorkspaceLeaf) {
 		super(leaf);
 	}
@@ -10,17 +14,22 @@ export class AdvancedGraphView extends ItemView {
 	getViewType(): string {
 		return VIEW_TYPE_ADVANCED_GRAPH;
 	}
+
 	getDisplayText(): string {
 		return 'Advanced Graph View';
 	}
 
 	async onOpen() {
-		const container = this.containerEl.children[1];
-		container.empty();
-		container.createEl('h2', { text: 'Advanced Graph View' });
+		this.component = new Component({
+			target: this.contentEl,
+			props: {
+				variable: 234
+			}
+		});
 	}
 
 	async onClose() {
 		console.log('Closing Advanced Graph View');
+		this.component.$destroy();
 	}
 }

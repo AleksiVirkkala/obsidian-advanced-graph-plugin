@@ -5,5 +5,7 @@ module.exports = {
 	arrowParens: 'avoid',
 	trailingComma: 'none',
 	printWidth: 100,
-	pluginSearchDirs: ['.']
+	plugins: [require('prettier-plugin-svelte')],
+	pluginSearchDirs: ['.'],
+	overrides: [{ files: '*.svelte', options: { parser: 'svelte' } }]
 };
