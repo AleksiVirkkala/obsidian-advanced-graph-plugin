@@ -8,7 +8,7 @@ export default class AdvancedGraphPlugin extends Plugin {
 	async onload() {
 		await this.loadSettings();
 
-		this.registerView(VIEW_TYPE_ADVANCED_GRAPH, leaf => new AdvancedGraphView(leaf));
+		this.registerView(VIEW_TYPE_ADVANCED_GRAPH, leaf => new AdvancedGraphView(leaf, this));
 
 		this.addRibbonIcon('dice', 'Open graph', () => {
 			this.activateView();

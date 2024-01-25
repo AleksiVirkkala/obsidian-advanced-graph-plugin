@@ -1,13 +1,16 @@
 import { ItemView, WorkspaceLeaf } from 'obsidian';
 
+import type AdvancedGraphPlugin from 'main';
+
 import Component from './Component.svelte';
+import { plugin } from './stores';
 
 export const VIEW_TYPE_ADVANCED_GRAPH = 'advanced-graph-view';
 
 export class AdvancedGraphView extends ItemView {
 	component!: Component;
 
-	constructor(leaf: WorkspaceLeaf) {
+	constructor(leaf: WorkspaceLeaf, public plugin: AdvancedGraphPlugin) {
 		super(leaf);
 	}
 
@@ -20,6 +23,8 @@ export class AdvancedGraphView extends ItemView {
 	}
 
 	async onOpen() {
+		plugin.set(this.plugin);
+
 		this.component = new Component({
 			target: this.contentEl,
 			props: {
