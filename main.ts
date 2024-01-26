@@ -1,26 +1,16 @@
-import { Plugin } from "obsidian";
-import {
-	AdvancedGraphView,
-	VIEW_TYPE_ADVANCED_GRAPH,
-} from "src/AdvancedGraphView";
-import {
-	GraphSettings,
-	DEFAULT_SETTINGS,
-	GraphSettingTab,
-} from "src/GraphSettings";
+import { Plugin } from 'obsidian';
+import { AdvancedGraphView, VIEW_TYPE_ADVANCED_GRAPH } from 'src/AdvancedGraphView';
+import { type GraphSettings, DEFAULT_SETTINGS, GraphSettingTab } from 'src/GraphSettings';
 
 export default class AdvancedGraphPlugin extends Plugin {
-	settings: GraphSettings;
+	settings!: GraphSettings;
 
 	async onload() {
 		await this.loadSettings();
 
-		this.registerView(
-			VIEW_TYPE_ADVANCED_GRAPH,
-			(leaf) => new AdvancedGraphView(leaf)
-		);
+		this.registerView(VIEW_TYPE_ADVANCED_GRAPH, leaf => new AdvancedGraphView(leaf));
 
-		this.addRibbonIcon("dice", "Open graph", () => {
+		this.addRibbonIcon('dice', 'Open graph', () => {
 			this.activateView();
 		});
 
@@ -33,7 +23,7 @@ export default class AdvancedGraphPlugin extends Plugin {
 		const leaf = workspace.getLeaf(true);
 		await leaf.setViewState({
 			type: VIEW_TYPE_ADVANCED_GRAPH,
-			active: true,
+			active: true
 		});
 		workspace.revealLeaf(leaf); // Maybe unnecessary
 	}
@@ -41,11 +31,7 @@ export default class AdvancedGraphPlugin extends Plugin {
 	onunload() {}
 
 	async loadSettings() {
-		this.settings = Object.assign(
-			{},
-			DEFAULT_SETTINGS,
-			await this.loadData()
-		);
+		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
 	}
 
 	async saveSettings() {

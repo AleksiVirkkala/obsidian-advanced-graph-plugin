@@ -1,11 +1,11 @@
-import AdvancedGraphPlugin from "main";
-import { PluginSettingTab, App, Setting } from "obsidian";
+import AdvancedGraphPlugin from 'main';
+import { PluginSettingTab, App, Setting } from 'obsidian';
 
 export interface GraphSettings {
 	mySetting: string;
 }
 export const DEFAULT_SETTINGS: GraphSettings = {
-	mySetting: "default",
+	mySetting: 'default'
 };
 
 export class GraphSettingTab extends PluginSettingTab {
@@ -22,13 +22,13 @@ export class GraphSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		new Setting(containerEl)
-			.setName("Setting #1")
+			.setName('Setting #1')
 			.setDesc("It's a secret")
-			.addText((text) =>
+			.addText(text =>
 				text
-					.setPlaceholder("Enter your secret")
+					.setPlaceholder('Enter your secret')
 					.setValue(this.plugin.settings.mySetting)
-					.onChange(async (value) => {
+					.onChange(async value => {
 						this.plugin.settings.mySetting = value;
 						await this.plugin.saveSettings();
 					})
